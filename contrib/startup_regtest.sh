@@ -244,7 +244,7 @@ funder-lease-requests-only=false
 start_ln() {
 	# Start bitcoind in the background
 	test -f "$BITCOIN_DIR/regtest/bitcoind.pid" || \
-		"$BITCOIND" -datadir="$BITCOIN_DIR" -regtest -txindex -fallbackfee=0.00000253 -daemon
+		"$BITCOIND" -datadir="$BITCOIN_DIR" -regtest -txindex -fallbackfee=0.00001000 -daemon
 
 	# Wait for it to start.
 	while ! "$BCLI" -datadir="$BITCOIN_DIR" -regtest ping 2> /dev/null; do echo "awaiting bitcoind..." && sleep 1; done
@@ -379,14 +379,14 @@ fund_nodes() {
 
 		"$LCLI" --lightning-dir="$LIGHTNING_DIR"/l"$node1" fundchannel "$L2_NODE_ID" 1000000 > /dev/null
 
-		"$BCLI" -datadir="$BITCOIN_DIR" -regtest generatetoaddress 6 "$ADDRESS" > /dev/null
-
-		printf "%s" "Waiting for confirmation... "
-
-		while ! "$LCLI" -F --lightning-dir="$LIGHTNING_DIR"/l"$node1" listchannels | grep -q "channels"
-		do
-			sleep 1
-		done
+#		"$BCLI" -datadir="$BITCOIN_DIR" -regtest generatetoaddress 6 "$ADDRESS" > /dev/null
+#
+#		printf "%s" "Waiting for confirmation... "
+#
+#		while ! "$LCLI" -F --lightning-dir=$LIGHTNING_DIR/l"$node1" listchannels | grep -q "channels"
+#		do
+#			sleep 1
+#		done
 
 		echo "done."
 
