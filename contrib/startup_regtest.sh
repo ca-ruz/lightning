@@ -244,7 +244,7 @@ funder-lease-requests-only=false
 start_ln() {
 	# Start bitcoind in the background
 	test -f "$BITCOIN_DIR/regtest/bitcoind.pid" || \
-		"$BITCOIND" -datadir="$BITCOIN_DIR" -regtest -txindex -fallbackfee=0.00001000 -daemon
+		"$BITCOIND" -datadir="$BITCOIN_DIR" -regtest -txindex -fallbackfee=0.00000253 -daemon
 
 	# Wait for it to start.
 	while ! "$BCLI" -datadir="$BITCOIN_DIR" -regtest ping 2> /dev/null; do echo "awaiting bitcoind..." && sleep 1; done
